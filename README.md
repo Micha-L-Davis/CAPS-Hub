@@ -8,6 +8,8 @@ Latest Pull Request: https://github.com/Micha-L-Davis/CAPS-Hub/pull/1
 
 ![UML Diagram]()
 
+![Example Output](ubuntu_u4jzawF2OI.png)
+    
 ## Installation
 
 1. Clone this repository onto your local machine
