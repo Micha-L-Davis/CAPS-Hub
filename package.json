@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/Micha-L-Davis/CAPS-Hub#readme",
   "dependencies": {
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1"
   }
 }
