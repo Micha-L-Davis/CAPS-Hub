@@ -1,6 +1,6 @@
 # CAPS-Hub
 
-An event driven messaging system designed to facilitate instant messages between multiple vendor and driver clients in a delivery network.
+An event driven instant messaging system designed to facilitate messages between multiple vendor and driver clients in a delivery network.
 
 Deployed Site: <Not Yet> 
 
