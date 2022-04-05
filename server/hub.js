@@ -22,7 +22,7 @@ caps.on('connection', socket => {
   socket.on('pickup', (payload) => {
     logEvent('pickup', payload);
 
-    socket.to(payload.vendorId).emit('pickup', payload);
+    socket.broadcast.emit('pickup', payload);
   });
 
   socket.on('in-transit', (payload) => {
@@ -34,7 +34,7 @@ caps.on('connection', socket => {
   socket.on('delivered', (payload) => {
     logEvent('delivered', payload);
 
-    socket.broadcast.emit('delivered', payload);
+    socket.to(payload.vendorId).emit('delivered', payload);
   });
 });
 
