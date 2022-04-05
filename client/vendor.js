@@ -11,6 +11,7 @@ let handleDelivered = (payload) => console.log(`Thank you, ${payload.customer}`)
 
 let sendOrder = (order) => {
   console.log('sending order');
+  socket.emit('join', order);
   socket.emit('pickup', order);
 };
 
