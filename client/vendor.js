@@ -9,7 +9,7 @@ const chance = new Chance();
 
 let handleDelivered = (payload) => console.log(`Thank you, ${payload.customer}`);
 
-let sendOrder = (socket, order) => {
+let sendOrder = (order) => {
   console.log('sending order');
   socket.emit('pickup', order);
 };
@@ -27,4 +27,4 @@ class PickupOrder {
 }
 
 
-sendOrder(socket, new PickupOrder(`${chance.first()}'s Shop`));
+sendOrder(new PickupOrder(`${chance.first()}'s Shop`));
