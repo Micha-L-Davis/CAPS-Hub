@@ -2,7 +2,7 @@
 
 const eventPool = require('./events.js');
 const clientDriver = require('./client-driver.js');
-const ClientVendor = require('./client-vendor.js');
+const clientVendor = require('./client-vendor.js');
 
 
 let date = new Date();
