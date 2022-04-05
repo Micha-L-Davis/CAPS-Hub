@@ -5,8 +5,13 @@ const Chance = require('chance');
 
 const chance = new Chance();
 
+let sendThanks = (payload) => console.log(`Thank you, ${payload.customer}`);
 
-eventPool.on('DELIVERED', (payload) => console.log(`Thank you, ${payload.customer}`));
+let sendOrder = (order) => {
+  eventPool.emit('PICKUP', order);
+};
+
+eventPool.on('DELIVERED', (payload) => { sendThanks(payload); });
 
 class PickupOrder {
   constructor(storeName) {
@@ -18,8 +23,10 @@ class PickupOrder {
 }
 
 setInterval(() => {
-  let order = new PickupOrder(`${chance.first()}'s ${chance.word()}`);
-  eventPool.emit('PICKUP', order);
+  sendOrder(new PickupOrder(`${chance.first()}'s Shop`));
 }, 3000);
 
-module.exports = PickupOrder;
+module.exports = {
+  sendOrder,
+  sendThanks,
+};
