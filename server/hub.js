@@ -6,34 +6,34 @@ const PORT = process.env.PORT || 3000;
 const server = new Server(PORT);
 const caps = server.of('/caps');
 
-const date = new Date();
-
-const logEvent = (event, payload) => {
-  console.log(new EVENT(event, payload));
-};
-
 caps.on('connection', socket => {
   console.log('Socket connected: ' + socket.id);
 
-  socket.on('join', (payload) => {
-    socket.join(payload.vendorId);
+  socket.onAny((event, payload) => {
+    console.log(new EVENT(event, payload));
+  });
+
+  socket.on('join', ({ vendorId }) => {
+    socket.join(vendorId);
+    socket.emit('join', vendorId);
+  });
+
+  socket.on('catch-up', () => {
+
   });
 
   socket.on('pickup', (payload) => {
-    logEvent('pickup', payload);
-
+    //store pickup order in the order queue
     socket.broadcast.emit('pickup', payload);
   });
 
   socket.on('in-transit', (payload) => {
-    logEvent('in-transit', payload);
-
-    socket.broadcast.emit('in-transit', payload);
+    //store transit message in the message queue
+    socket.to(payload.vendorId).emit('in-transit', payload);
   });
 
   socket.on('delivered', (payload) => {
-    logEvent('delivered', payload);
-
+    //store delivery message in the message queue
     socket.to(payload.vendorId).emit('delivered', payload);
   });
 });
@@ -41,7 +41,7 @@ caps.on('connection', socket => {
 class EVENT {
   constructor(event, payload) {
     this.event = event;
-    this.time = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}Z`;
+    this.time = new Date();
     this.payload = payload;
   }
 }

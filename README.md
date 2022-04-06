@@ -6,9 +6,9 @@ Deployed Site: <Not Yet>
 
 Latest Pull Request: https://github.com/Micha-L-Davis/CAPS-Hub/pull/3
 
-![UML Diagram](brave_6DizQwJrX2.png)
+![UML Diagram](./assets/brave_6DizQwJrX2.png)
 
-![Example Output](ubuntu_u4jzawF2OI.png)
+![Example Output](./assets/ubuntu_u4jzawF2OI.png)
     
 ## Installation
 
