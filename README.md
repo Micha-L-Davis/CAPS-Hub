@@ -4,7 +4,7 @@ An event driven instant messaging system designed to facilitate messages between
 
 Deployed Site: <Not Yet> 
 
-Latest Pull Request: https://github.com/Micha-L-Davis/CAPS-Hub/pull/1
+Latest Pull Request: https://github.com/Micha-L-Davis/CAPS-Hub/pull/3
 
 ![UML Diagram](brave_6DizQwJrX2.png)
 
