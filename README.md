@@ -6,7 +6,7 @@ Deployed Site: <Not Yet>
 
 Latest Pull Request: https://github.com/Micha-L-Davis/CAPS-Hub/pull/1
 
-![UML Diagram]()
+![UML Diagram](brave_6DizQwJrX2.png)
 
 ![Example Output](ubuntu_u4jzawF2OI.png)
     
