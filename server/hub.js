@@ -41,7 +41,7 @@ caps.on('connection', socket => {
 
   socket.on('received', (payload) => {
     let currentQueue = messageQueues.read(payload.vendorId);
-    let message = currentQueue.remove(payload.messageId);
+    let message = currentQueue.remove(payload.orderId);
 
     socket.emit('received', message);
   });
@@ -67,16 +67,15 @@ caps.on('connection', socket => {
 
 function enqueueMessage(payload, queueId) {
   let currentQueue = messageQueues.read(queueId);
-  let messageId = chance.guid();
 
   if (!currentQueue) {
     let queueKey = messageQueues.store(queueId, new Queue());
     currentQueue = messageQueues.read(queueKey);
   }
-  payload.messageId = messageId;
-  currentQueue.store(messageId, payload);
 
-  return messageId;
+  currentQueue.store(payload.orderId, payload);
+
+  return payload.orderId;
 }
 
 class EVENT {
