@@ -1,0 +1,29 @@
+{
+  "name": "caps-hub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client-driver.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest --coverage --verbose",
+    "start": "node driver.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Micha-L-Davis/CAPS-Hub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Micha-L-Davis/CAPS-Hub/issues"
+  },
+  "homepage": "https://github.com/Micha-L-Davis/CAPS-Hub#readme",
+  "dependencies": {
+    "jest": "^27.5.1",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1"
+  }
+}
