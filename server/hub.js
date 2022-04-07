@@ -1,10 +1,16 @@
 'use strict';
 
+const Chance = require('chance');
 const { Server } = require('socket.io');
-const PORT = process.env.PORT || 3000;
+const Queue = require('./lib/queue');
 
+const PORT = process.env.PORT || 3000;
 const server = new Server(PORT);
 const caps = server.of('/caps');
+
+const messageQueues = new Queue();
+
+const chance = new Chance();
 
 caps.on('connection', socket => {
   console.log('Socket connected: ' + socket.id);
@@ -15,28 +21,63 @@ caps.on('connection', socket => {
 
   socket.on('join', ({ vendorId }) => {
     socket.join(vendorId);
+    if (!messageQueues.read(vendorId)) {
+      messageQueues.store(vendorId, new Queue());
+    }
     socket.emit('join', vendorId);
   });
 
-  socket.on('catch-up', () => {
+  socket.on('getAll', ({ clientId, eventName }) => {
 
+    let currentQueue = messageQueues.read(clientId);
+    if (!currentQueue) {
+      console.log('No message queue found');
+    } else {
+      Object.keys(currentQueue.data).forEach(messageId => {
+        socket.emit(eventName, currentQueue.data[messageId]);
+      });
+    }
+  });
+
+  socket.on('received', (payload) => {
+    let currentQueue = messageQueues.read(payload.vendorId);
+    let message = currentQueue.remove(payload.messageId);
+
+    socket.emit('received', message);
   });
 
   socket.on('pickup', (payload) => {
-    //store pickup order in the order queue
+    enqueueMessage(payload, 'drivers');
+
     socket.broadcast.emit('pickup', payload);
   });
 
   socket.on('in-transit', (payload) => {
-    //store transit message in the message queue
+    enqueueMessage(payload, payload.vendorId);
+
     socket.to(payload.vendorId).emit('in-transit', payload);
   });
 
   socket.on('delivered', (payload) => {
-    //store delivery message in the message queue
+    enqueueMessage(payload, payload.vendorId);
+
     socket.to(payload.vendorId).emit('delivered', payload);
   });
 });
+
+function enqueueMessage(payload, queueId) {
+  let currentQueue = messageQueues.read(queueId);
+  let messageId = chance.guid();
+
+  if (!currentQueue) {
+    let queueKey = messageQueues.store(queueId, new Queue());
+    currentQueue = messageQueues.read(queueKey);
+  }
+  payload.messageId = messageId;
+  currentQueue.store(messageId, payload);
+
+  return messageId;
+}
 
 class EVENT {
   constructor(event, payload) {
