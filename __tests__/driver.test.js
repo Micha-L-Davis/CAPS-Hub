@@ -1,7 +1,7 @@
 'use strict';
 
 const eventPool = require('../events.js');
-const handlePickup = require('../client/driver.js');
+const handlePickup = require('../client-driver/driver.js');
 
 jest.mock('../events.js', () => {
   return {

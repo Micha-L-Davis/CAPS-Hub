@@ -1,6 +1,6 @@
 
 const eventPool = require('../events.js');
-const { sendOrder, sendThanks } = require('../client/vendor');
+const { sendOrder, sendThanks } = require('../client-vendor-1/vendor');
 
 jest.mock('../events.js', () => {
   return {
